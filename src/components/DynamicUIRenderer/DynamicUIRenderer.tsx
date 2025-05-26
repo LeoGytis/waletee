@@ -32,12 +32,10 @@ export const DynamicUIRenderer: React.FC<DynamicUIRendererProps> = ({
 	schema,
 }) => {
 	return (
-		<div className="max-w-2xl mx-auto p-6 bg-white">
-			<div className="space-y-8">
-				{schema.components.map((component, index) => (
-					<div key={index}>{renderComponent(component)}</div>
-				))}
-			</div>
+		<div className="w-[412px] mx-auto p-6 bg-white border rounded-lg shadow-md">
+			{schema.components.map((component, index) => (
+				<div key={index}>{renderComponent(component)}</div>
+			))}
 		</div>
 	);
 };

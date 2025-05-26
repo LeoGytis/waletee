@@ -14,6 +14,7 @@ export interface CheckboxOption {
 
 export interface CheckboxListPanelComponent {
 	type: 'checkbox-list-panel';
+	id?: string;
 	onSubmit: string;
 	options: CheckboxOption[];
 }

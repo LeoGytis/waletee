@@ -28,47 +28,53 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 	};
 
 	return (
-		<div className="space-y-2.5">
-			{component.options.map((option) => (
-				<label
-					key={option.value}
-					className={`flex items-center p-1 gap-4 cursor-pointer ${
-						option.disabled
-							? 'opacity-50 cursor-not-allowed'
-							: 'hover:bg-gray-50'
-					}`}
-				>
-					<input
-						type="checkbox"
-						checked={selectedOptions.includes(option.value)}
-						onChange={() => handleCheckboxChange(option.value)}
-						disabled={option.disabled}
-						className="w-5 h-5"
-					/>
-
-					<div className="flex-1">
-						<div className="font-medium">{option.title}</div>
-						{option.subtitle && (
-							<div className="text-sm text-gray-500">
-								{option.subtitle}
-							</div>
-						)}
-					</div>
-					{option.imageUrl && (
-						<img
-							src={option.imageUrl}
-							alt={option.title}
-							className="w-8 h-8 mr-4"
+		<div className="py-6 px-5 space-y-5">
+			<div>Search is here</div>
+			<div className="space-y-2.5 max-h-[204px] overflow-y-auto">
+				{component.options.map((option) => (
+					<label
+						key={option.value}
+						className={`flex items-center gap-4 cursor-pointer ${
+							option.disabled
+								? 'opacity-50 cursor-not-allowed'
+								: 'hover:bg-gray-50'
+						}`}
+					>
+						<input
+							type="checkbox"
+							checked={selectedOptions.includes(option.value)}
+							onChange={() => handleCheckboxChange(option.value)}
+							disabled={option.disabled}
+							className="w-5 h-5"
 						/>
-					)}
-				</label>
-			))}
-			<button
-				onClick={handleSubmit}
-				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-			>
-				Submit
-			</button>
+
+						<div className="flex-1">
+							<div className="font-medium">{option.title}</div>
+							{option.subtitle && (
+								<div className="text-sm text-gray-500">
+									{option.subtitle}
+								</div>
+							)}
+						</div>
+						{option.imageUrl && (
+							<img
+								src={option.imageUrl}
+								alt={option.title}
+								className="w-8 h-8 mr-4"
+							/>
+						)}
+					</label>
+				))}
+			</div>
+			<div className="flex justify-between items-center">
+				<button className="px-4 py-2 text-primary ">Reset</button>
+				<button
+					onClick={handleSubmit}
+					className="px-4 py-2 bg-primary text-white rounded-lg"
+				>
+					Submit
+				</button>
+			</div>
 		</div>
 	);
 };

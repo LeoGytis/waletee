@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {PageTitleComponent} from '../../utils/types';
 
 interface PageTitleProps {
@@ -6,5 +6,9 @@ interface PageTitleProps {
 }
 
 export const PageTitle: React.FC<PageTitleProps> = ({component}) => {
-	return <h1 className="text-lg font-bold mb-6">{component.label}</h1>;
+	useEffect(() => {
+		document.title = component.label;
+	}, [component.label]);
+
+	return null;
 };
