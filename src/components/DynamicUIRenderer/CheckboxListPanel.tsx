@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import searchIcon from '../../svg/search.svg';
 import {CheckboxListPanelComponent} from '../../utils/types';
 
 interface CheckboxListPanelProps {
@@ -11,6 +12,7 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 	const [selectedOptions, setSelectedOptions] = useState<string[]>(
 		component.options.filter((opt) => opt.checked).map((opt) => opt.value)
 	);
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const handleCheckboxChange = (value: string) => {
 		setSelectedOptions((prev) => {
@@ -27,17 +29,42 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 		}
 	};
 
+	const handleReset = () => {
+		setSelectedOptions([]);
+		setSearchQuery('');
+	};
+
+	const filteredOptions = component.options.filter((option) => {
+		const searchLower = searchQuery.toLowerCase();
+		return (
+			option.title.toLowerCase().includes(searchLower) ||
+			(option.subtitle &&
+				option.subtitle.toLowerCase().includes(searchLower))
+		);
+	});
+
 	return (
-		<div className="py-6 px-5 space-y-5">
-			<div>Search is here</div>
+		<div className="space-y-5">
+			<div className="relative">
+				<input
+					type="text"
+					value={searchQuery}
+					onChange={(e) => setSearchQuery(e.target.value)}
+					placeholder="Search for Payment Method"
+					className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+				/>
+				<img
+					src={searchIcon}
+					alt="Search"
+					className="absolute right-4 top-1/2 transform -translate-y-1/2"
+				/>
+			</div>
 			<div className="space-y-2.5 max-h-[204px] overflow-y-auto">
-				{component.options.map((option) => (
+				{filteredOptions.map((option) => (
 					<label
 						key={option.value}
-						className={`flex items-center gap-4 cursor-pointer ${
-							option.disabled
-								? 'opacity-50 cursor-not-allowed'
-								: 'hover:bg-gray-50'
+						className={`flex gap-4 ${
+							option.disabled && 'opacity-50 cursor-not-allowed'
 						}`}
 					>
 						<input
@@ -45,11 +72,11 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 							checked={selectedOptions.includes(option.value)}
 							onChange={() => handleCheckboxChange(option.value)}
 							disabled={option.disabled}
-							className="w-5 h-5"
+							className="size-5 cursor-pointer mt-1.5"
 						/>
 
 						<div className="flex-1">
-							<div className="font-medium">{option.title}</div>
+							<div className="font-semibold">{option.title}</div>
 							{option.subtitle && (
 								<div className="text-sm text-gray-500">
 									{option.subtitle}
@@ -67,7 +94,12 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 				))}
 			</div>
 			<div className="flex justify-between items-center">
-				<button className="px-4 py-2 text-primary ">Reset</button>
+				<button
+					onClick={handleReset}
+					className="px-4 py-2 text-primary "
+				>
+					Reset
+				</button>
 				<button
 					onClick={handleSubmit}
 					className="px-4 py-2 bg-primary text-white rounded-lg"
