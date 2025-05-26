@@ -10,5 +10,5 @@ export const PageTitle: React.FC<PageTitleProps> = ({component}) => {
 		document.title = component.label;
 	}, [component.label]);
 
-	return null;
+	return <h1 className="text-2xl font-bold">{component.label}</h1>;
 };

@@ -27,7 +27,11 @@ export const PaymentForm = () => {
 	}
 
 	if (!schema) {
-		return <span className="text-red-500">Failed to load page schema</span>;
+		return (
+			<div className="p-4 bg-white border rounded-lg shadow-lg text-red-500">
+				Failed to load Payment Form
+			</div>
+		);
 	}
 
 	return <DynamicUIRenderer schema={schema} />;
