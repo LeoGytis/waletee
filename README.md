@@ -29,6 +29,10 @@ The app will open automatically in your browser at [http://localhost:3000](http:
 -   The API layer handles schema fetching with simulated delay and comprehensive component validation `@api.ts`
 -   The component then interprets this schema and renders the appropriate components based on their type and properties `@DynamicUIRenderer.tsx`
 -   Users can see the rendered UI components!
+-   Error handling is implemented with a user-friendly approach:
+    -   When schema validation fails, a user-friendly error message is displayed in the UI
+    -   Detailed validation errors are logged to the console using `console.error` for debugging purposes
+    -   This dual approach ensures users aren't overwhelmed with technical details while maintaining developer visibility into issues
 
 ## Technologies Used
 
