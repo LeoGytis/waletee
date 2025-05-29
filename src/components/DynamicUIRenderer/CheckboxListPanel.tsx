@@ -59,7 +59,7 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 					className="absolute transform -translate-y-1/2 right-4 top-1/2"
 				/>
 			</div>
-			<div className="space-y-2.5 max-h-[204px] w-[372px] overflow-y-auto">
+			<div className="space-y-2.5 max-h-[204px] w-[372px] overflow-y-auto pr-4">
 				{filteredOptions.map((option) => (
 					<label
 						key={option.value}
@@ -72,13 +72,15 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 							checked={selectedOptions.includes(option.value)}
 							onChange={() => handleCheckboxChange(option.value)}
 							disabled={option.disabled}
-							className="size-5 cursor-pointer mt-1.5"
+							className="size-[18px] cursor-pointer mt-1"
 						/>
 
-						<div className="flex-1">
-							<div className="font-semibold">{option.title}</div>
+						<div className="flex-1 space-y-1">
+							<div className="text-sm font-semibold text-greydark">
+								{option.title}
+							</div>
 							{option.subtitle && (
-								<div className="text-sm text-gray-500">
+								<div className="text-xs text-grey">
 									{option.subtitle}
 								</div>
 							)}
@@ -87,7 +89,7 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 							<img
 								src={option.imageUrl}
 								alt={option.title}
-								className="w-8 h-8 mr-4"
+								className="size-7"
 							/>
 						)}
 					</label>
@@ -96,13 +98,13 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 			<div className="flex items-center justify-between">
 				<button
 					onClick={handleReset}
-					className="px-4 py-2 font-bold text-primary"
+					className="px-4 py-2 text-sm font-bold rounded-lg text-primary hover:bg-primary hover:text-white"
 				>
 					Reset
 				</button>
 				<button
 					onClick={handleSubmit}
-					className="px-4 py-2 font-bold text-white rounded-lg bg-primary"
+					className="px-4 py-2 text-sm font-bold text-white rounded-lg bg-primary hover:bg-white hover:text-primary"
 				>
 					Submit
 				</button>
