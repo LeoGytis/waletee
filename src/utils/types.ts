@@ -6,8 +6,8 @@ export interface PageTitleComponent {
 export interface CheckboxOption {
 	value: string;
 	title: string;
-	subtitle: string;
-	imageUrl: string;
+	subtitle?: string;
+	imageUrl?: string;
 	checked?: boolean;
 	disabled?: boolean;
 }

@@ -44,7 +44,7 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 	});
 
 	return (
-		<div className="space-y-5 py-6 px-5 bg-white border rounded-lg shadow-lg">
+		<div className="px-5 py-6 space-y-5 bg-white border rounded-lg shadow-lg">
 			<div className="relative">
 				<input
 					type="text"
@@ -56,7 +56,7 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 				<img
 					src={searchIcon}
 					alt="Search"
-					className="absolute right-4 top-1/2 transform -translate-y-1/2"
+					className="absolute transform -translate-y-1/2 right-4 top-1/2"
 				/>
 			</div>
 			<div className="space-y-2.5 max-h-[204px] w-[372px] overflow-y-auto">
@@ -83,24 +83,26 @@ export const CheckboxListPanel: React.FC<CheckboxListPanelProps> = ({
 								</div>
 							)}
 						</div>
-						<img
-							src={option.imageUrl}
-							alt={option.title}
-							className="w-8 h-8 mr-4"
-						/>
+						{option.imageUrl && (
+							<img
+								src={option.imageUrl}
+								alt={option.title}
+								className="w-8 h-8 mr-4"
+							/>
+						)}
 					</label>
 				))}
 			</div>
-			<div className="flex justify-between items-center">
+			<div className="flex items-center justify-between">
 				<button
 					onClick={handleReset}
-					className="px-4 py-2 text-primary font-bold"
+					className="px-4 py-2 font-bold text-primary"
 				>
 					Reset
 				</button>
 				<button
 					onClick={handleSubmit}
-					className="px-4 py-2 bg-primary text-white rounded-lg font-bold"
+					className="px-4 py-2 font-bold text-white rounded-lg bg-primary"
 				>
 					Submit
 				</button>

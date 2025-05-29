@@ -12,10 +12,15 @@ interface DynamicUIRendererProps {
 	schema: DynamicUISchema;
 }
 
-const renderComponent = (component: Component) => {
+const renderComponent = (component: Component, schemaTitle: string) => {
 	switch (component.type) {
 		case 'page-title':
-			return <PageTitle component={component as PageTitleComponent} />;
+			return (
+				<PageTitle
+					component={component as PageTitleComponent}
+					schemaTitle={schemaTitle}
+				/>
+			);
 		case 'checkbox-list-panel':
 			return (
 				<CheckboxListPanel
@@ -34,7 +39,9 @@ export const DynamicUIRenderer: React.FC<DynamicUIRendererProps> = ({
 	return (
 		<div className="space-y-6">
 			{schema.components.map((component, index) => (
-				<div key={index}>{renderComponent(component)}</div>
+				<div key={index}>
+					{renderComponent(component, schema.title)}
+				</div>
 			))}
 		</div>
 	);
