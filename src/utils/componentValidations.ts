@@ -1,65 +1,71 @@
+const VALIDATION_ERROR_MESSAGE = 'Failed to validate schema';
+
+const logValidationError = (message: string, details?: any) => {
+	console.error('[Validation Error]', message, details || '');
+};
+
 export const validatePageTitleComponent = (
 	component: any,
 	index: number
-): string[] => {
-	const violations: string[] = [];
-
+): void => {
 	if (!component.label || typeof component.label !== 'string') {
-		violations.push(
-			`Page title component at index ${index} must have a label field`
-		);
+		const message = `Page title component at index ${index} must have a label field`;
+		logValidationError(message, {component});
+		throw new Error(VALIDATION_ERROR_MESSAGE);
 	}
-
-	return violations;
 };
 
 export const validateCheckboxListPanelComponent = (
 	component: any,
 	index: number
-): string[] => {
-	const violations: string[] = [];
-
+): void => {
 	if (!component.onSubmit || typeof component.onSubmit !== 'string') {
-		violations.push(
-			`Checkbox list panel at index ${index} must have an onSubmit field`
-		);
+		const message = `Checkbox list panel at index ${index} must have an onSubmit field`;
+		logValidationError(message, {component});
+		throw new Error(VALIDATION_ERROR_MESSAGE);
 	}
 
 	if (!Array.isArray(component.options)) {
-		violations.push(
-			`Checkbox list panel at index ${index} must have an options array`
-		);
+		const message = `Checkbox list panel at index ${index} must have an options array`;
+		logValidationError(message, {component});
+		throw new Error(VALIDATION_ERROR_MESSAGE);
 	} else {
 		component.options.forEach((option: any, optionIndex: number) => {
 			if (!option.value || typeof option.value !== 'string') {
-				violations.push(
-					`Option at index ${optionIndex} in checkbox list panel ${index} must have a value field`
-				);
+				const message = `Option at index ${optionIndex} in checkbox list panel ${index} must have a value field`;
+				logValidationError(message, {option, optionIndex});
+				throw new Error(VALIDATION_ERROR_MESSAGE);
 			}
 			if (!option.title || typeof option.title !== 'string') {
-				violations.push(
-					`Option at index ${optionIndex} in checkbox list panel ${index} must have a title field`
-				);
+				const message = `Option at index ${optionIndex} in checkbox list panel ${index} must have a title field`;
+				logValidationError(message, {option, optionIndex});
+				throw new Error(VALIDATION_ERROR_MESSAGE);
 			}
 		});
 	}
-
-	return violations;
 };
 
-export const validateComponent = (component: any, index: number): string[] => {
+export const validateComponent = (component: any, index: number): void => {
 	if (!component.type || typeof component.type !== 'string') {
-		return [`Component at index ${index} must have a type field`];
-	}
-
-	switch (component.type) {
-		case 'page-title':
-			return validatePageTitleComponent(component, index);
-		case 'checkbox-list-panel':
-			return validateCheckboxListPanelComponent(component, index);
-		default:
-			return [
-				`Unknown component type: ${component.type} at index ${index}`,
-			];
+		const message = `Component at index ${index} must have a type field`;
+		logValidationError(message, {component});
+		throw new Error(VALIDATION_ERROR_MESSAGE);
+	} else {
+		try {
+			switch (component.type) {
+				case 'page-title':
+					validatePageTitleComponent(component, index);
+					break;
+				case 'checkbox-list-panel':
+					validateCheckboxListPanelComponent(component, index);
+					break;
+				default:
+					const message = `Unknown component type: ${component.type} at index ${index}`;
+					logValidationError(message, {component});
+					throw new Error(VALIDATION_ERROR_MESSAGE);
+			}
+		} catch (error) {
+			throw new Error(VALIDATION_ERROR_MESSAGE);
+		}
 	}
 };

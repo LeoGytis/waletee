@@ -8,21 +8,14 @@ export const fetchPageSchema = async (): Promise<DynamicUISchema> => {
 		const schema = pageSchema as DynamicUISchema;
 
 		// Validate all components in the schema
-		const violations: string[] = [];
 		schema.components.forEach((component, index) => {
-			const componentViolations = validateComponent(component, index);
-			violations.push(...componentViolations);
+			validateComponent(component, index);
 		});
-
-		if (violations.length > 0) {
-			throw new Error(
-				`Schema validation failed: ${violations.join(', ')}`
-			);
-		}
 
 		return schema;
 	} catch (error) {
-		console.error('Schema validation failed:', error);
-		throw error;
+		throw new Error(
+			error instanceof Error ? error.message : 'Failed to fetch schema'
+		);
 	}
 };
