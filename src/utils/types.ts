@@ -18,7 +18,14 @@ export interface CheckboxListPanelComponent {
 	options: CheckboxOption[];
 }
 
-export type Component = PageTitleComponent | CheckboxListPanelComponent;
+// Type mapping for all component types
+export interface ComponentTypeMap {
+	'page-title': PageTitleComponent;
+	'checkbox-list-panel': CheckboxListPanelComponent;
+	// 'new-component': CheckboxListPanelComponent;
+}
+
+export type Component = ComponentTypeMap[keyof ComponentTypeMap];
 
 export interface DynamicUISchema {
 	title: string;

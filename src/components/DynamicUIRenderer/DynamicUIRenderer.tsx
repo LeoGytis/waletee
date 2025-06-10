@@ -17,8 +17,8 @@ const renderComponent = (component: Component, schemaTitle: string) => {
 		case 'page-title':
 			return (
 				<PageTitle
-					component={component as PageTitleComponent}
 					schemaTitle={schemaTitle}
+					component={component as PageTitleComponent}
 				/>
 			);
 		case 'checkbox-list-panel':
@@ -33,7 +33,7 @@ const renderComponent = (component: Component, schemaTitle: string) => {
 	}
 };
 
-export const DynamicUIRenderer: React.FC<DynamicUIRendererProps> = ({
+const DynamicUIRendererComponent: React.FC<DynamicUIRendererProps> = ({
 	schema,
 }) => {
 	return (
@@ -46,3 +46,5 @@ export const DynamicUIRenderer: React.FC<DynamicUIRendererProps> = ({
 		</div>
 	);
 };
+// Implementing memo to prevent re-rendering of the component when the schema changes
+export const DynamicUIRenderer = React.memo(DynamicUIRendererComponent);
